@@ -37,6 +37,10 @@ app.listen( process.env.PORT || 3030, () => { /* process.env.PORT es para el ser
   console.log("Servidor -J- iniciado");
 }); 
 
+console.log("Bienvenido al server -J-");
+
+app.send("Hola");
+
 app.get('/', (req, res) => {
   res.send('DB de Juli!')
 });
