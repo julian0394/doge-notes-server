@@ -39,7 +39,7 @@ app.listen( process.env.PORT || 3030, () => { /* process.env.PORT es para el ser
 
 
 app.get('/', (req, res) => {
-  res.send('DB de Juli!')
+  res.render('DB de Juli!')
 });
  
 
