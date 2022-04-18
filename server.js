@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-
+const calcularFecha = require('./assets/calcularFecha');
 
 // Usos de paquetes y middleware
 require('dotenv').config(); /* Permite el uso de .env */
