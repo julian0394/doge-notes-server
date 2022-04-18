@@ -30,14 +30,12 @@ const db  = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.BD_PASS,
   database: process.env.DB_DATABASE, 
-});
-
+}); 
 
 // Funciones server / rutas 
 app.listen( process.env.PORT || 3030, () => { /* process.env.PORT es para el servidor de heroku una vez subido */
   console.log("Servidor -J- iniciado");
 }); 
-
 
 app.get('/', (req, res) => {
   res.send('DB de Juli!')
