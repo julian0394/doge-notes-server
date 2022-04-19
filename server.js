@@ -39,8 +39,6 @@ app.listen( process.env.PORT || 3030, err => { /* process.env.PORT es para el se
   else console.log("Servidor -J- iniciado");
 }); 
 
-const path = 'https://doge-notes.herokuapp.com';
-
 app.get('/', (req, res) => {
   res.send('<h1>DB de Juli!</h1>');
 });
@@ -68,7 +66,7 @@ app.get('/prueba', (req, res) => {
 
 
 /* Login de usuario */
-app.post('https://doge-notes.herokuapp.com/login/', (req, res) => { 
+app.post('/login/', (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -107,7 +105,7 @@ app.post('https://doge-notes.herokuapp.com/login/', (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post('https://doge-notes.herokuapp.com/register/', async (req, res) => {
+app.post('/register/', async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
@@ -148,7 +146,7 @@ app.post('https://doge-notes.herokuapp.com/register/', async (req, res) => {
 
   
 /* Agregar nueva nota */
-app.post(path + '/notas/nueva', validarLargoNota, (req, res) => {  /* validarLargoNota es middleware */
+app.post('/notas/nueva', validarLargoNota, (req, res) => {  /* validarLargoNota es middleware */
   const {tituloNota, cuerpoNota, ID_usuario} = req.body;
 
   const query = insertarNotaEnBD(tituloNota, cuerpoNota, ID_usuario);
@@ -169,7 +167,7 @@ app.post(path + '/notas/nueva', validarLargoNota, (req, res) => {  /* validarLar
  
 
 /* Muestra las notas de un usuario logeado */
-app.post(path + '/notas/mostrar', (req, res) => {
+app.post('/notas/mostrar', (req, res) => {
   const {ID_usuario} = req.body;
   const query = buscarNotasEnDB(ID_usuario); 
   db.query(query, (err, resultado) => {
@@ -184,7 +182,7 @@ app.post(path + '/notas/mostrar', (req, res) => {
 
 
 /* Edicion de nota existente */
-app.post(path + '/notas/editar', (req, res) => {
+app.post('/notas/editar', (req, res) => {
   const {tituloNota, cuerpoNota, ID_nota} = req.body;
   const query = editarNota(tituloNota, cuerpoNota, ID_nota); 
   db.query(query, (err, resultado) => {
@@ -204,7 +202,7 @@ app.post(path + '/notas/editar', (req, res) => {
 
 
 /* Borrar nota existente */
-app.post(path + '/notas/borrar', (req, res) => {
+app.post('/notas/borrar', (req, res) => {
  const {ID_nota} = req.body;
  const query = borrarNotaEnBD(ID_nota);
 //  console.log('intentando borrar..');
@@ -221,7 +219,7 @@ app.post(path + '/notas/borrar', (req, res) => {
 
 
 /* Cambiar foto de usuario (nueva o cambio) */
-app.post(path + '/usuario/cambiar-foto', (req, res) => {
+app.post('/usuario/cambiar-foto', (req, res) => {
   const {link, ID_usuario} = req.body; 
   const query = editarFotoPerfil(link, ID_usuario); 
   // console.log('cambiando foto');
@@ -239,7 +237,7 @@ app.post(path + '/usuario/cambiar-foto', (req, res) => {
 
 
 /* Borrar foto de usuario (deja en null) */
-app.post(path + '/usuario/borrar-foto', (req, res) => {
+app.post('/usuario/borrar-foto', (req, res) => {
   const {ID_usuario} = req.body; 
   const query = borrarFotoPerfil(ID_usuario); 
   // console.log('borrando foto');
@@ -257,7 +255,7 @@ app.post(path + '/usuario/borrar-foto', (req, res) => {
 
 
 /* Busca el usuario solo por ID (ya logeado) al cambiar o borrar imagen */
-app.post(path + '/usuario/buscar', (req,res) => {
+app.post('/usuario/buscar', (req,res) => {
   const {ID_usuario} = req.body
   const query = buscarUsuarioPorId(ID_usuario)
   // console.log('llamando usuario... again..')
@@ -275,7 +273,7 @@ app.post(path + '/usuario/buscar', (req,res) => {
 
 
 /* Buscar datos generalos */
-app.get(path + '/datos/traer', (req, res) => {
+app.get('/datos/traer', (req, res) => {
   const query = buscarDatos();
   // console.log('buscando datos generales');
   db.query(query, (err, resultado) => {
@@ -294,7 +292,7 @@ app.get(path + '/datos/traer', (req, res) => {
 
 
 /* Suma o resta 1 a la cantidad global de notas dependiendo el parametro */
-app.post(path + '/datos/editarNotas', (req, res) => {
+app.post('/datos/editarNotas', (req, res) => {
   const {operacion} = req.body;
   const query = editarDatos(operacion);
 
@@ -310,7 +308,7 @@ app.post(path + '/datos/editarNotas', (req, res) => {
 
 
 /* Suma 1 a la cantidad total de usuarios reigstrados */
-app.post(path + '/datos/editarUsuarios', (req, res) => {
+app.post('/datos/editarUsuarios', (req, res) => {
   // console.log('Sumando 1 a datos de usuarios');
   const query = editarUsuarios();
 
@@ -325,7 +323,7 @@ app.post(path + '/datos/editarUsuarios', (req, res) => {
 });
 
 
-app.post(path + '/hashear', (req, res) => {
+app.post('/hashear', (req, res) => {
   const { palabra } = req.body;
   let hashJ;
   console.log('palabra:', palabra);
