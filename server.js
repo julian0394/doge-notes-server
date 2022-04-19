@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 
 
 /* Login de usuario */
-app.post('https://doge-notes.herokuapp.com/login', (req, res) => { 
+app.post('https://doge-notes.herokuapp.com/login/', (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -89,7 +89,7 @@ app.post('https://doge-notes.herokuapp.com/login', (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post('https://doge-notes.herokuapp.com/register', async (req, res) => {
+app.post('https://doge-notes.herokuapp.com/register/', async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
