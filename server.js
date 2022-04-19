@@ -18,13 +18,13 @@ app.use(cors());
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-// function validarLargoNota(req, res, next) {
-//   if (req.body.cuerpoNota.length > 40) {
-//     res.status(401).send('error-largo');
-//   } else {
-//     next();
-//   }
-// }
+function validarLargoNota(req, res, next) {
+  if (req.body.cuerpoNota.length > 40) {
+    res.status(401).send('error-largo');
+  } else {
+    next();
+  }
+}
 
 const db  = mysql.createPool({
   connectionLimit : 10,
