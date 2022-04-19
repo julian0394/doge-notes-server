@@ -11,11 +11,12 @@ const saltRounds = 10;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
-app.options("*", (req, res) => {
-  res.status(200).send("Preflight request allowed");
-});
+const corsOptions = {
+  origin: 'https://doge-notes.netlify.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 // function validarLargoNota(req, res, next) {
 //   if (req.body.cuerpoNota.length > 40) {
@@ -49,7 +50,7 @@ app.get('/', (req, res) => {
 /*------------------------------------------------------------------------------------------------------------------------*/
 
 /* Login de usuario */
-app.post('/login', (req, res) => { 
+app.post('/login', cors(corsOptions), (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -88,7 +89,7 @@ app.post('/login', (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post('/register', async (req, res) => {
+app.post('/register', cors(corsOptions), async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
@@ -256,7 +257,7 @@ app.post('/usuario/buscar', (req,res) => {
 
 
 /* Buscar datos generalos */
-app.get('/datos/traer', (req, res) => {
+app.get('/datos/traer', cors(corsOptions), (req, res) => {
   const query = buscarDatos();
   // console.log('buscando datos generales');
   db.query(query, (err, resultado) => {
@@ -275,7 +276,7 @@ app.get('/datos/traer', (req, res) => {
 
 
 /* Suma o resta 1 a la cantidad global de notas dependiendo el parametro */
-app.post('/datos/editarNotas', (req, res) => {
+app.post('/datos/editarNotas', cors(corsOptions), (req, res) => {
   const {operacion} = req.body;
   const query = editarDatos(operacion);
 
@@ -291,7 +292,7 @@ app.post('/datos/editarNotas', (req, res) => {
 
 
 /* Suma 1 a la cantidad total de usuarios reigstrados */
-app.post('/datos/editarUsuarios', (req, res) => {
+app.post('/datos/editarUsuarios', cors(corsOptions), (req, res) => {
   // console.log('Sumando 1 a datos de usuarios');
   const query = editarUsuarios();
 
