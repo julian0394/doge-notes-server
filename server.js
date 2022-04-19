@@ -33,8 +33,8 @@ const db  = mysql.createPool({
 }); 
  
 // Funciones server / rutas 
-const port = process.env.PORT || 3030
-app.listen( port, err => { /* process.env.PORT es para el servidor de heroku una vez subido */
+// const port = process.env.PORT || 3030
+app.listen( process.env.PORT || 3030, err => { /* process.env.PORT es para el servidor de heroku una vez subido */
   if(err) throw err;
   else console.log("Servidor -J- iniciado");
 }); 
