@@ -121,6 +121,7 @@ app.post('/register', async (req, res) => {
         if (err2) {
           console.log('error J al buscar luego de registrar', err2);
         } else {
+console.log('RESULTADO:', resultado);
           res.send(resultado2[0]);
         }
       });

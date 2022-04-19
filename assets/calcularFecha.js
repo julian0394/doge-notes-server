@@ -13,4 +13,4 @@ function calcularFecha() {
   return fechaHoy;
 }
 
-module.export = calcularFecha;
+module.exports = calcularFecha;
