@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
   res.send('<h1>DB de Juli!</h1>');
 });
 
-app.get('https://doge-notes.herokuapp.com/prueba', (req, res) => {
+app.get('/prueba', (req, res) => {
   const query = `SELECT * FROM Vista_usuarios WHERE nombreUsuario = juli` ;
   db.query(query, async (err, resultado) => {
     if(err)
