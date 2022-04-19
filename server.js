@@ -39,7 +39,7 @@ app.listen( port, err => { /* process.env.PORT es para el servidor de heroku una
   else console.log("Servidor -J- iniciado");
 }); 
 
-const path = 'https://doge-notes.herokuapp.com'
+const path = 'https://doge-notes.herokuapp.com';
 
 app.get('/', (req, res) => {
   res.send('<h1>DB de Juli!</h1>');
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 
 
 /* Login de usuario */
-app.post(path + '/login', (req, res) => { 
+app.post('https://doge-notes.herokuapp.com/login', (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -89,7 +89,7 @@ app.post(path + '/login', (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post(path + '/register', async (req, res) => {
+app.post('https://doge-notes.herokuapp.com/register', async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
