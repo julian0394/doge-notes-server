@@ -4,19 +4,19 @@ const cors = require('cors');
 const calcularFecha = require('./assets/calcularFecha');
 
 // Usos de paquetes y middleware
-require('dotenv').config(); /* Permite el uso de .env */
+// require('dotenv').config(); /* Permite el uso de .env */
 
 const bcrypt = require('bcrypt'); /* Encriptacion de datos */
 const saltRounds = 10;
 
 const app = express();
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
-const corsOptions = {
-  origin: 'https://doge-notes.netlify.app',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// const corsOptions = {
+//   origin: 'https://doge-notes.netlify.app',
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 // function validarLargoNota(req, res, next) {
 //   if (req.body.cuerpoNota.length > 40) {
@@ -36,8 +36,8 @@ const db  = mysql.createPool({
 }); 
  
 // Funciones server / rutas 
-// const port = process.env.PORT || 3030
-app.listen( process.env.PORT || 3030, err => { /* process.env.PORT es para el servidor de heroku una vez subido */
+const port = process.env.PORT || 3030;
+app.listen( port, err => { /* process.env.PORT es para el servidor de heroku una vez subido */
   if(err) throw err;
   else console.log("Servidor -J- iniciado");
 }); 
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 /*------------------------------------------------------------------------------------------------------------------------*/
 
 /* Login de usuario */
-app.post('/login', cors(corsOptions), (req, res) => { 
+app.post('/login', (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -89,7 +89,7 @@ app.post('/login', cors(corsOptions), (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post('/register', cors(corsOptions), async (req, res) => {
+app.post('/register', async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
@@ -257,7 +257,7 @@ app.post('/usuario/buscar', (req,res) => {
 
 
 /* Buscar datos generalos */
-app.get('/datos/traer', cors(corsOptions), (req, res) => {
+app.get('/datos/traer', (req, res) => {
   const query = buscarDatos();
   // console.log('buscando datos generales');
   db.query(query, (err, resultado) => {
@@ -276,7 +276,7 @@ app.get('/datos/traer', cors(corsOptions), (req, res) => {
 
 
 /* Suma o resta 1 a la cantidad global de notas dependiendo el parametro */
-app.post('/datos/editarNotas', cors(corsOptions), (req, res) => {
+app.post('/datos/editarNotas', (req, res) => {
   const {operacion} = req.body;
   const query = editarDatos(operacion);
 
@@ -292,7 +292,7 @@ app.post('/datos/editarNotas', cors(corsOptions), (req, res) => {
 
 
 /* Suma 1 a la cantidad total de usuarios reigstrados */
-app.post('/datos/editarUsuarios', cors(corsOptions), (req, res) => {
+app.post('/datos/editarUsuarios', (req, res) => {
   // console.log('Sumando 1 a datos de usuarios');
   const query = editarUsuarios();
 
