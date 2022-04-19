@@ -13,15 +13,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function validarLargoNota(req, res, next) {
-  console.log('entando a middleware de validacion');
+app.options("*", (req, res) => {
+  res.status(200).send("Preflight request allowed");
+});
 
-  if (req.body.cuerpoNota.length > 40) {
-    res.status(401).send('error-largo');
-  } else {
-    next();
-  }
-}
+// function validarLargoNota(req, res, next) {
+//   if (req.body.cuerpoNota.length > 40) {
+//     res.status(401).send('error-largo');
+//   } else {
+//     next();
+//   }
+// }
 
 const db  = mysql.createPool({
   connectionLimit : 10,
@@ -43,30 +45,11 @@ app.get('/', (req, res) => {
   res.send('<h1>DB de Juli!</h1>');
 });
 
-app.get('/prueba', (req, res) => {
-  const query = `SELECT * FROM Vista_usuarios WHERE nombreUsuario = juli` ;
-  db.query(query, async (err, resultado) => {
-    if(err)
-      console.log('error J en server al logear', err);
-    else {              
-      console.log('ACCESO PERMITIDO');
-      res.send({  /* Traje TODO pero envio solo los datos deseados */
-        ID_usuario: resultado[0].ID_usuario,
-        nombreUsuario: resultado[0].nombreUsuario,
-        cantNotas: resultado[0].cantNotas,
-        imagenUsuario: resultado[0].imagenUsuario,
-        fechaRegistro: resultado[0].fechaRegistro,
-      });
-    }
-  });
-});
- 
 
 /*------------------------------------------------------------------------------------------------------------------------*/
 
-
 /* Login de usuario */
-app.post('/login/', (req, res) => { 
+app.post('/login', (req, res) => { 
   /* 1ro recibo los datos ingresados en el input */
   const {nombreUsuario, passUsuario} = req.body;
 
@@ -105,7 +88,7 @@ app.post('/login/', (req, res) => {
 
 
 /* Registro de nuevo usuario */
-app.post('/register/', async (req, res) => {
+app.post('/register', async (req, res) => {
   const {nombreUsuario, mailUsuario, passUsuario} = req.body;
 
   /* Encriptar mail y pass */
